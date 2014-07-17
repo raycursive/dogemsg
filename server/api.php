@@ -32,7 +32,7 @@ function connectdatabase(){
 
 //Send message
 function sendmsg(){
-	mysql_query("INSERT INTO `messages` (keyfrom, keyto, time, message, signature, read) VALUES ('". $_POST["from"] . "', '" . $_POST["to"] . "', now(), '" . $_POST["message"] . "', '" . $_POST["signature"] . "', 0)");
+	mysql_query("INSERT INTO `messages` (keyfrom, keyto, time, message, signature, read) VALUES ('". $_POST["from"] . "', '" . $_POST["to"] . "', now(), '" . $_POST["message"] . "', '" . $_POST["signature"] . "', FALSE)");
 	exit(json_encode(array("Status" => "Added 1!", "action" => "send")));
 }
 
