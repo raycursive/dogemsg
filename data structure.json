@@ -13,6 +13,7 @@ API Structure
 	"message" : "sentmessage", 
 	"keyfrom" : "from",
 	"keyto" : "to",
+	"signature" : "sign(msg)"
 }
 
 

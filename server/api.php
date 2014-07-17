@@ -18,9 +18,21 @@ if ($_POST["action"] == "delete")
 	delmsgs($_POST["from"], "keyfrom");
 
 exit(json_encode(array("Status" => "Nothing")));
+
+//Connect database
+function connectdatabase(){
+	$db = mysql_connect("localhost", "dogemsg", "dogeisgood");
+	if (!$db){
+		die('could not connect: ' . mysql_error());
+	}
+	else
+		return $db;
+}
+
+
 //Send message
 function sendmsg(){
-	mysql_query("INSERT INTO `messages` (keyfrom, keyto, time, message) VALUES ('". $_POST["from"]. "', '". $_POST["to"]. "', now(), '". $_POST["message"]. "')");
+	mysql_query("INSERT INTO `messages` (keyfrom, keyto, time, message, signature) VALUES ('". $_POST["from"] . "', '" . $_POST["to"] . "', now(), '" . $_POST["message"] . "', '" . $_POST["signature"] . "')");
 	exit(json_encode(array("Status" => "Added 1!", "action" => "send")));
 }
 
@@ -33,7 +45,8 @@ function receivemsg($key, $des){
 		$msg = array("from" => $row["keyfrom"], 
 					 "to" => $row["keyto"], 
 					 "time" => $row["time"],
-					 "message" => $row["message"]);
+					 "message" => $row["message"],
+					 "signature" => $row["signature"]);
 		array_push($returndata, json_encode($msg));
 	}
 	exit(json_encode($returndata));
@@ -53,12 +66,3 @@ function delmsgs($key, $des){
 	}
 }
 
-//Connect database
-function connectdatabase(){
-	$db = mysql_connect("localhost", "dogemsg", "dogeisgood");
-	if (!$db){
-		die('could not connect: ' . mysql_error());
-	}
-	else
-		return $db;
-}
