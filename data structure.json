@@ -1,0 +1,73 @@
+API Structure
+//Receive, from or to
+//waiting for implementing auth the identity of sender
+{
+	"action" : "receive",
+	"keyfrom" : "from",
+	"keyto" : "to",
+}
+
+//waiting for implementing auth.
+{
+	"action" : "send",
+	"message" : "sentmessage", 
+	"keyfrom" : "from",
+	"keyto" : "to",
+}
+
+
+{
+	"action" : "delete" ,
+	"keyfrom" : "from",
+	"keyto" : "to",
+	"message" : "salt",
+	"signature" : "sign(msg)"
+
+}
+
+//if the action is `delete`, message must be the string "delete" encrypted by private key to garantee the identity of user.
+
+{
+	"action" : "adduser",
+	"key" : "publickey"
+}
+
+
+// waiting for implementing the part of auth.
+{
+	"action" : "modifyuser",
+	"key" : "publickey",
+	"name" : "name"
+}
+
+
+
+
+
+
+
+
+
+MSG Structure
+
+{
+	"type" : "message",
+	"message" : "msg"
+}
+
+{
+	"type" : "request",
+	"action" : "askForP2P"
+}
+
+{
+	"type" : "request",
+	"action" : "accept",
+	"ip" : "ip"
+}
+
+{
+	"type" : "request",
+	"action" : "received",
+	"ip" : "ip"
+}

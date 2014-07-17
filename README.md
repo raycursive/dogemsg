@@ -54,3 +54,11 @@ dogemsg
 python3的decode真他喵难用
 
 找不到一个合适的php ecc库 QwQ
+
+最后决定在php里以system的形式调用python. auth的部分解决.
+
+目前的校验方式是, 以private key签名, 同时将signature和message发至服务器验证身份
+
+signature的生成 `key.sign(msg)`
+
+校验:`ECC(pubkey = public_key).verify(signature, msg)
