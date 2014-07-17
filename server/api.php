@@ -32,7 +32,7 @@ function connectdatabase(){
 
 //Send message
 function sendmsg(){
-	mysql_query("INSERT INTO `messages` (keyfrom, keyto, time, message, signature) VALUES ('". $_POST["from"] . "', '" . $_POST["to"] . "', now(), '" . $_POST["message"] . "', '" . $_POST["signature"] . "')");
+	mysql_query("INSERT INTO `messages` (keyfrom, keyto, time, message, signature, read) VALUES ('". $_POST["from"] . "', '" . $_POST["to"] . "', now(), '" . $_POST["message"] . "', '" . $_POST["signature"] . "', 0)");
 	exit(json_encode(array("Status" => "Added 1!", "action" => "send")));
 }
 
@@ -40,7 +40,7 @@ function sendmsg(){
 //Query data from database. ($des = "keyto" => receive, $des = "keyfrom" => get chat logs)
 function receivemsg($key, $des){
 	$returndata = array();
-	$result = mysql_query("SELECT * FROM `messages` WHERE `". $des ."` = '". $key ."' ORDER BY time");
+	$result = mysql_query("SELECT * FROM `messages` WHERE `". $des ."` = '". $key ."' AND `read` = FALSE ORDER BY time");
 	while ($row = mysql_fetch_array($result)){
 		$msg = array("from" => $row["keyfrom"], 
 					 "to" => $row["keyto"], 
