@@ -92,3 +92,11 @@ def modifyuser(key, name='Anonymous', email=' '):
                 }
     request = GetRequest(server, postdata)
     print(request)
+
+def queryuser(key):
+    '''key: hex'''
+    postdata = {'action': 'queryuser',
+                'key': key
+                }
+    request = GetRequest(server, postdata)
+    print(request)

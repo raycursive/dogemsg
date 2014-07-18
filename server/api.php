@@ -7,6 +7,8 @@ if ($_POST["action"] == "receive") receivemsg();
 if ($_POST["action"] == "delete") delmsgs();
 if ($_POST["action"] == "adduser") adduser();
 if ($_POST["action"] == "modifyuser") modifyuser();
+if ($_POST["action"] == "queryuser") queryuser();
+
 
 exit(json_encode(array("Status" => "Nothing")));
 
@@ -103,4 +105,13 @@ function modifyuser() {
     } else {
     	exit(error("modifyuser", "Verify Failed!"));
     }
+}
+
+function queryuser(){
+    $result = mysql_query("SELECT * FROM `users` WHERE `key` = '" . $_POST["key"] . "'");
+    if (!$result)
+            exit(error("queryuser", mysql_error()));
+        else
+            $row = mysql_fetch_array($result);
+            exit(json_encode(array("name" => $row["name"], "email" => $row["email"], "key" => $row["key"])));
 }

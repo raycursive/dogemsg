@@ -1,13 +1,12 @@
 API Structure
-//Receive, from or to
-//waiting for implementing auth the identity of sender
+
+//Receive
 {
 	"action" : "receive",
 	"key" : "key",
 	"unread" : 1
 }
 
-//waiting for implementing auth.
 {
 	"action" : "send",
 	"message" : "sentmessage", 
@@ -38,7 +37,6 @@ API Structure
 }
 
 
-// waiting for implementing the part of auth.
 {
 	"action" : "modifyuser",
 	"key" : "publickey",
@@ -48,13 +46,11 @@ API Structure
 	"message" : "msg"
 }
 
-// add friend
 
 {
-	"action" : ""
+	"action" : "queryuser",
+	"key" : "key"
 }
-
-
 
 
 
