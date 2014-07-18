@@ -99,7 +99,7 @@ function modifyuser() {
     	if (!$res)
     		exit(error("modifyuser", mysql_error()));
     	else
-    		exit(json_encode(array("Status" => "Success", "action" : "modifyuser", "key" => $_POST["key"], "name" => $_POST["name"], "email" => $_POST["email"])));
+    		exit(json_encode(array("Status" => "Success", "action" => "modifyuser", "key" => $_POST["key"], "name" => $_POST["name"], "email" => $_POST["email"])));
     } else {
     	exit(error("modifyuser", "Verify Failed!"));
     }

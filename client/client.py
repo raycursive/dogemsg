@@ -1,7 +1,7 @@
 from binascii import unhexlify
 from pyelliptic.ecc import ECC
 from key import *
-from postrec import *
+from operations import *
 
 def load_settings():
     '''load settings from config.json'''

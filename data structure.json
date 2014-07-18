@@ -58,10 +58,6 @@ API Structure
 
 
 
-
-
-
-
 MSG Structure
 
 {
@@ -85,3 +81,19 @@ MSG Structure
 	"action" : "received",
 	"ip" : "ip"
 }
+
+
+FRIEND LIST Structure
+
+[
+	{
+		"name" : "name",
+		"alias" : "alias",
+		"key" : "key"
+	},
+	{
+		"name" : "name2",
+		"alias" : "alias2",
+		"key" : "key2"
+	}
+]

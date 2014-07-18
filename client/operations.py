@@ -1,9 +1,12 @@
 import json
 import urllib.request
 import urllib.parse
+import parsemsg
 from randomstr import *
 from key import *
 from binascii import hexlify, unhexlify
+
+server = "http://msg.raycursive.com/api.php"
 
 def GetRequest(des, postdata):
     params = urllib.parse.urlencode(postdata).encode('utf-8')
@@ -17,16 +20,6 @@ def GetRequest(des, postdata):
     return urllib.request.urlopen(req).read().decode("UTF8")
 
 
-def parsemsg(key, req):
-    result = []
-    for i in map(json.loads, json.loads(req)):
-        i['message'] = key.decrypt(unhexlify(i['message']))
-        if ECC(pubkey = unhexlify(i['from'])).verify(unhexlify(i['signature']),i['message']):
-            i['message'] = i['message'].decode()
-            result.append(i)
-        else:
-            print("ERROR! Verify Failed!")
-    return result
 
 
 def receive(key, unread = 1):
@@ -35,8 +28,17 @@ def receive(key, unread = 1):
                 'key': tohex(key.get_pubkey()),
                 'unread' : unread
                 }
-    request = GetRequest("http://msg.raycursive.com/api.php", postdata)
-    return parsemsg(key,request)
+    request = GetRequest(server, postdata)
+    result = []
+    for i in map(json.loads, json.loads(request)):
+        i['message'] = key.decrypt(unhexlify(i['message']))
+        if ECC(pubkey = unhexlify(i['from'])).verify(unhexlify(i['signature']),i['message']):
+            i['message'] = i['message'].decode()
+            result.append(i)
+        else:
+            print("ERROR! Verify Failed!")
+    return result
+
 
 
 def send(keyfrom, keyto, message):
@@ -47,7 +49,7 @@ def send(keyfrom, keyto, message):
                 'signature': tohex(keyfrom.sign(message)),
                 'message': tohex(keyfrom.encrypt(message, unhexlify(keyto)))
                 }
-    request = GetRequest("http://msg.raycursive.com/api.php", postdata)
+    request = GetRequest(server, postdata)
     print(request)
 
 
@@ -60,7 +62,7 @@ def delete(key):
                 'signature': sign,
                 'message': msg
                 }
-    request = GetRequest("http://msg.raycursive.com/api.php", postdata)
+    request = GetRequest(server, postdata)
     print(request)
 
 
@@ -75,7 +77,7 @@ def adduser(key, name='Anonymous', email=''):
                 'signature': sign,
                 'message': msg
                 }
-    request = GetRequest("http://msg.raycursive.com/api.php", postdata)
+    request = GetRequest(server, postdata)
     print(request)
 
 def modifyuser(key, name='Anonymous', email=' '):
@@ -88,5 +90,5 @@ def modifyuser(key, name='Anonymous', email=' '):
                 'signature': sign,
                 'message':msg
                 }
-    request = GetRequest("http://msg.raycursive.com/api.php", postdata)
+    request = GetRequest(server, postdata)
     print(request)
