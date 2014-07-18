@@ -19,8 +19,7 @@ API Structure
 
 {
 	"action" : "delete" ,
-	"keyfrom" : "from",
-	"keyto" : "to",
+	"key" : "to",
 	"message" : "salt",
 	"signature" : "sign(msg)"
 
@@ -32,7 +31,10 @@ API Structure
 	"action" : "adduser",
 	"key" : "publickey",
 	"name" : "username",
-	"email" : "email"
+	"email" : "email",
+	"signature" : "sign(msg)",
+	"message" : "msg"
+
 }
 
 
@@ -41,7 +43,9 @@ API Structure
 	"action" : "modifyuser",
 	"key" : "publickey",
 	"name" : "username",
-	"email" : "email"
+	"email" : "email",
+	"signature" : "sign(msg)",
+	"message" : "msg"
 }
 
 // add friend

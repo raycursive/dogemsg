@@ -67,6 +67,11 @@ signature的生成 `key.sign(msg)`
 ###2014/07/18
 
 `sendmessage`基本实现完成
-`receive` 校验部分仍待实现
+<del>`receive` 校验部分仍待实现</del>
 
 ok Server端基本撸完 下午完善client 然后开始GUI开发
+
+`receive`校验部分完成, 最后将返回一个包含所有信息的list
+(之前若msg是中文的话会有bug, 果断encode, 解决问题)
+
+下午将函数封装, 并且初步完成一个命令行下的客户端.

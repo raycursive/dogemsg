@@ -18,9 +18,15 @@ def GetRequest(des, postdata):
 
 
 def parsemsg(key, req):
+    result = []
     for i in map(json.loads, json.loads(req)):
         i['message'] = key.decrypt(unhexlify(i['message']))
-        print(i)
+        if ECC(pubkey = unhexlify(i['from'])).verify(unhexlify(i['signature']),i['message']):
+            i['message'] = i['message'].decode()
+            result.append(i)
+        else:
+            print("ERROR! Verify Failed!")
+    return result
 
 
 def receive(key, unread = 1):
@@ -30,7 +36,7 @@ def receive(key, unread = 1):
                 'unread' : unread
                 }
     request = GetRequest("http://msg.raycursive.com/api.php", postdata)
-    parsemsg(key,request)
+    return parsemsg(key,request)
 
 
 def send(keyfrom, keyto, message):
@@ -42,7 +48,6 @@ def send(keyfrom, keyto, message):
                 'message': tohex(keyfrom.encrypt(message, unhexlify(keyto)))
                 }
     request = GetRequest("http://msg.raycursive.com/api.php", postdata)
-    print(postdata)
     print(request)
 
 
