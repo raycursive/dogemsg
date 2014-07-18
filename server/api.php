@@ -25,7 +25,7 @@ function sendmsg() {
 		exit(error('send', mysql_error()));
 	}
 	else
-		exit(json_encode(array("Status" => "Added 1!", "action" => "send")));
+		exit(json_encode(array("Status" => "Success!", "action" => "send")));
 }
 
 //Query data from database. 
@@ -86,7 +86,7 @@ function adduser() {
     	if (!$res)
     		exit(error("adduser", mysql_error()));
     	else
-    		exit(json_encode(array("Status" => "user added", "key" => $_POST["key"], "name" => $_POST["name"], "email" => $_POST["email"])));
+    		exit(json_encode(array("Status" => "Success!","action" => "adduser" ,"key" => $_POST["key"], "name" => $_POST["name"], "email" => $_POST["email"])));
     } else {
     	exit(error("adduser", "Verify Failed!"));
     }
@@ -99,7 +99,7 @@ function modifyuser() {
     	if (!$res)
     		exit(error("modifyuser", mysql_error()));
     	else
-    		exit(json_encode(array("Status" => "user modified", "key" => $_POST["key"], "name" => $_POST["name"], "email" => $_POST["email"])));
+    		exit(json_encode(array("Status" => "Success", "action" : "modifyuser", "key" => $_POST["key"], "name" => $_POST["name"], "email" => $_POST["email"])));
     } else {
     	exit(error("modifyuser", "Verify Failed!"));
     }
