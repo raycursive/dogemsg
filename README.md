@@ -61,4 +61,12 @@ python3的decode真他喵难用
 
 signature的生成 `key.sign(msg)`
 
-校验:`ECC(pubkey = public_key).verify(signature, msg)
+校验:`ECC(pubkey = public_key).verify(signature, msg)`
+
+
+###2014/07/18
+
+`sendmessage`基本实现完成
+`receive` 校验部分仍待实现
+
+ok Server端基本撸完 下午完善client 然后开始GUI开发

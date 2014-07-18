@@ -3,8 +3,8 @@ API Structure
 //waiting for implementing auth the identity of sender
 {
 	"action" : "receive",
-	"keyfrom" : "from",
-	"keyto" : "to",
+	"key" : "key",
+	"unread" : 1
 }
 
 //waiting for implementing auth.

@@ -3,7 +3,7 @@ from binascii import hexlify, unhexlify
 import json
 
 
-def parsekey(key):
+def tohex(key):
     return hexlify(key).decode().upper()
 
 
@@ -16,10 +16,10 @@ def generate_keypair(filename='account'):
         f.write(json.dumps(keypair))
 
 
-def load_ECC_and_keypair(filename='account'):
+def load_ECC(filename='account'):
     with open('keys/' + filename + '.key') as f:
         keypair = json.loads(f.read())
     return ECC(pubkey=unhexlify(keypair["public_key"]),
-               privkey=unhexlify(keypair["private_key"])), keypair
+               privkey=unhexlify(keypair["private_key"]))
 
 

@@ -2,13 +2,11 @@
 $db = connectdatabase();
 mysql_select_db("dogemsg", $db);
 
-if ($_POST["action"] == "send") sendmsg($_POST["from"]);
-
-if ($_POST["action"] == "receive") if ($_POST["to"]) receivemsg($_POST["to"], "keyto");
-else if ($_POST["from"]) receivemsg($_POST["from"], "keyfrom");
-
-if ($_POST["action"] == "delete") if ($_POST["to"]) delmsgs($_POST["to"], "keyto");
-else if ($_POST["from"]) delmsgs($_POST["from"], "keyfrom");
+if ($_POST["action"] == "send") sendmsg();
+if ($_POST["action"] == "receive") receivemsg();
+if ($_POST["action"] == "delete") delmsgs();
+if ($_POST["action"] == "adduser") adduser();
+if ($_POST["action"] == "modifyuser") modifyuser();
 
 exit(json_encode(array("Status" => "Nothing")));
 
@@ -21,46 +19,52 @@ function connectdatabase() {
 }
 
 //Send message
-function sendmsg($key) {
-	if (authen($key)) {
-	    mysql_query("INSERT INTO `messages` (keyfrom, keyto, time, message, signature, read) VALUES ('" . $key . "', '" . $_POST["to"] . "', now(), '" . $_POST["message"] . "', '" . $_POST["signature"] . "', FALSE)");
-	    exit(json_encode(array("Status" => "Added 1!", "action" => "send")));
-	} else {
-		exit(error('send'));
+function sendmsg() {
+	$res = mysql_query("INSERT INTO `messages` (`keyfrom`, `keyto`, `time`, `message`, `signature`, `read`) VALUES ('" . $_POST["from"] . "', '" . $_POST["to"] . "', NOW(), '" . $_POST["message"] . "', '" . $_POST["signature"] . "', '0')");
+	if(!$res){
+		exit(error('send', mysql_error()));
 	}
+	else
+		exit(json_encode(array("Status" => "Added 1!", "action" => "send")));
 }
 
-//Query data from database. ($des = "keyto" => receive, $des = "keyfrom" => get chat logs)
-function receivemsg($key, $des) {
-	if (authen($key)) {
-	    $returndata = array();
-	    $result = mysql_query("SELECT * FROM `messages` WHERE `" . $des . "` = '" . $key . "' AND `read` = FALSE ORDER BY time");
-	    mysql_query("UPDATE 'messages' SET 'read' = TRUE WHERE `" . $des . "` = '" . $key . "' AND `read` = FALSE ");
-	    while ($row = mysql_fetch_array($result)) {
-	        $msg = array("from" => $row["keyfrom"], "to" => $row["keyto"], "time" => $row["time"], "message" => $row["message"], "signature" => $row["signature"]);
-	        array_push($returndata, json_encode($msg));
-	    }
-	    exit(json_encode($returndata));
-	} else {
-		exit(error('receive'))
+//Query data from database. 
+function receivemsg() {
+	$returndata = array();
+	if($_POST['unread'] == 1)
+		$result = mysql_query("SELECT * FROM `messages` WHERE `keyto` = '" . $_POST["key"] . "' AND `read` = FALSE ORDER BY time");
+	else
+		$result = mysql_query("SELECT * FROM `messages` WHERE `keyto` = '" . $_POST["key"] . "' ORDER BY time");
+	if(!$result)
+		exit(error('receive', mysql_error()));
+	while ($row = mysql_fetch_array($result)) {
+	    $msg = array("from" => $row["keyfrom"], "to" => $row["keyto"], "time" => $row["time"], "message" => $row["message"], "signature" => $row["signature"], "read" => $row["read"]);
+	    array_push($returndata, json_encode($msg));
 	}
-    
+	$res = mysql_query("UPDATE `messages` SET `read` = TRUE WHERE `keyto` = '" . $_POST["key"] . "' AND `read` = FALSE ");
+	if (!$res)
+		exit(error("receive", mysql_error()));
+	else
+		exit(json_encode($returndata));
 }
 
 //Del msgs two days before
-function delmsgs($key, $des) {
-    if (authen($key)) {
-        mysql_query("DELETE FROM messages WHERE `" . $des . "` = '" . $key . "' AND  period_diff(curdate(), date(time)) >= 2");
-        exit(json_encode(array("Status" => "Success!", "action" => "delete")));
+function delmsgs() {
+    if (authen($_POST["key"])) {
+        $res = mysql_query("DELETE FROM `messages` WHERE `keyto` = '" . $_POST["key"] . "' AND  (period_diff(curdate(), date(time)) >= 2 or `read` = TRUE)");
+        if (!$res)
+        	exit(error("delete", mysql_error()));
+        else
+        	exit(json_encode(array("Status" => "Success!", "action" => "delete")));
     } else {
-        exit(error('delete'));
+        exit(error("delete", "Verify Failed!"));
     }
 }
 
 //Authentication
 //If message, signature == signed message
 //If not message, signature == your signed pubkey
-function authen($key, $message) {
+function authen($key) {
 	if ($_POST["message"]){
         $param = $key . " " . $_POST["signature"] . " " . $_POST["message"];
     } else {
@@ -71,26 +75,32 @@ function authen($key, $message) {
 }
 
 //Error Notification
-function error($action) {
-    return json_encode(array("Status" => "Error!", "action" => $action, "Error" => "Verify failed!"));
+function error($action, $details) {
+    return json_encode(array("Status" => "Error!", "action" => $action, "Details" => $details));
 }
 
 //Add new user to the database
-function adduser($key, $name, $email) {
-    if (authen($key)) {
-    	mysql_query("INSERT INTO 'users' (key, name, email, friendlist) VALUES ('" . $key . "', '" . $name . "', '" . $email . "', 'FALSE'");
-    	exit(json_encode(array("Status" => "user added", "key" => $key, "name" => $name, "email" => $email)));
+function adduser() {
+    if (authen($_POST["key"])) {
+    	$res = mysql_query("INSERT INTO `users` (`key`, `name`, `email`, `friendlist`) VALUES ('" . $_POST["key"] . "', '" . $_POST["name"] . "', '" . $_POST["email"] . "', '0')");
+    	if (!$res)
+    		exit(error("adduser", mysql_error()));
+    	else
+    		exit(json_encode(array("Status" => "user added", "key" => $_POST["key"], "name" => $_POST["name"], "email" => $_POST["email"])));
     } else {
-    	exit(error('adduser'))
+    	exit(error("adduser", "Verify Failed!"));
     }
 }
 
 //Modify user name
-function modifyuser($key, $name, $email) {
-    if (authen($key)) {
-    	mysql_query("UPDATE 'users' SET 'name'='" . $name . "', 'email'='" . $email . "' WHERE 'key'='" . $key . "'");
-    	exit(json_encode(array("Status" => "user modified", "key" => $key, "name" => $name, "email" => $email)));
+function modifyuser() {
+    if (authen($_POST["key"])) {
+    	$res = mysql_query("UPDATE `users` SET `name`='" . $_POST["name"] . "', `email`='" . $_POST["email"] . "' WHERE `key`='" . $_POST["key"] . "'");
+    	if (!$res)
+    		exit(error("modifyuser", mysql_error()));
+    	else
+    		exit(json_encode(array("Status" => "user modified", "key" => $_POST["key"], "name" => $_POST["name"], "email" => $_POST["email"])));
     } else {
-    	exit(error('modifyuser'))
+    	exit(error("modifyuser", "Verify Failed!"));
     }
 }
