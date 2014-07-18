@@ -1,7 +1,12 @@
 from binascii import unhexlify
 from pyelliptic.ecc import ECC
-from key import load_keypair
-from postrec import testsend
+from key import *
+from postrec import *
+
+def load_settings():
+    '''load settings from config.json'''
+    pass
+
 
 class user(object):
     """docstring for user"""

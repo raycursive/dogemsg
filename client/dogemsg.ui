@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab_Message">
      <attribute name="title">
@@ -34,9 +34,9 @@
       <property name="geometry">
        <rect>
         <x>160</x>
-        <y>40</y>
+        <y>20</y>
         <width>421</width>
-        <height>391</height>
+        <height>411</height>
        </rect>
       </property>
       <property name="html">
@@ -48,19 +48,6 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    Wonderful!&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>101</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>联系人:</string>
       </property>
      </widget>
      <widget class="QTextEdit" name="txtSend">
@@ -110,9 +97,9 @@ p, li { white-space: pre-wrap; }
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>40</y>
+        <y>20</y>
         <width>131</width>
-        <height>471</height>
+        <height>491</height>
        </rect>
       </property>
       <item>
@@ -244,7 +231,7 @@ p, li { white-space: pre-wrap; }
       <property name="geometry">
        <rect>
         <x>510</x>
-        <y>140</y>
+        <y>180</y>
         <width>71</width>
         <height>31</height>
        </rect>
@@ -257,7 +244,7 @@ p, li { white-space: pre-wrap; }
       <property name="geometry">
        <rect>
         <x>510</x>
-        <y>100</y>
+        <y>140</y>
         <width>71</width>
         <height>31</height>
        </rect>
@@ -266,16 +253,29 @@ p, li { white-space: pre-wrap; }
        <string>更改备注</string>
       </property>
      </widget>
-    </widget>
-    <widget class="QWidget" name="tab_Management">
-     <attribute name="title">
-      <string>账户/密钥管理</string>
-     </attribute>
-     <widget class="QLabel" name="label_2">
+     <widget class="QPushButton" name="cmdImportContact">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>20</y>
+        <x>510</x>
+        <y>100</y>
+        <width>71</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>导入联系人</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_Account">
+     <attribute name="title">
+      <string>账户管理</string>
+     </attribute>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>60</y>
         <width>51</width>
         <height>21</height>
        </rect>
@@ -284,98 +284,253 @@ p, li { white-space: pre-wrap; }
        <string>用户名:</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_4">
+     <widget class="QLineEdit" name="txtUsername">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>80</y>
+        <x>90</x>
+        <y>60</y>
+        <width>241</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>100</y>
         <width>51</width>
         <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>邮  箱:</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="txtEmail">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>100</y>
+        <width>241</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>160</y>
+        <width>51</width>
+        <height>31</height>
        </rect>
       </property>
       <property name="text">
        <string>公  钥:</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="QTextEdit" name="textEdit">
       <property name="geometry">
        <rect>
-        <x>80</x>
-        <y>80</y>
-        <width>311</width>
-        <height>21</height>
+        <x>90</x>
+        <y>140</y>
+        <width>431</width>
+        <height>81</height>
        </rect>
       </property>
       <property name="readOnly">
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_2">
+     <widget class="QPushButton" name="cmdModify">
       <property name="geometry">
        <rect>
-        <x>80</x>
-        <y>20</y>
-        <width>231</width>
+        <x>370</x>
+        <y>250</y>
+        <width>71</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>修改信息</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="cmdExportContact">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>250</y>
+        <width>71</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>导出联系人</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="cmdUpdate">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>250</y>
+        <width>71</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>更新信息</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_KeyManage">
+     <attribute name="title">
+      <string>密钥管理</string>
+     </attribute>
+     <widget class="QTableWidget" name="tableKeys">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>30</y>
+        <width>491</width>
+        <height>461</height>
+       </rect>
+      </property>
+      <property name="sortingEnabled">
+       <bool>true</bool>
+      </property>
+      <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+       <bool>true</bool>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>名称</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>文件名</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>用户名</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>邮箱</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>公钥</string>
+       </property>
+      </column>
+     </widget>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>591</width>
+        <height>481</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>密钥列表</string>
+      </property>
+      <widget class="QPushButton" name="cmdExportKey">
+       <property name="geometry">
+        <rect>
+         <x>510</x>
+         <y>20</y>
+         <width>71</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>导出...</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="cmdImportKey">
+       <property name="geometry">
+        <rect>
+         <x>510</x>
+         <y>60</y>
+         <width>71</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>导入...</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="cmdKeyDetails">
+       <property name="geometry">
+        <rect>
+         <x>510</x>
+         <y>100</y>
+         <width>71</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>详细信息</string>
+       </property>
+      </widget>
+     </widget>
+     <zorder>groupBox</zorder>
+     <zorder>tableKeys</zorder>
+    </widget>
+    <widget class="QWidget" name="tab_Settings">
+     <attribute name="title">
+      <string>设置</string>
+     </attribute>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>30</y>
+        <width>51</width>
         <height>21</height>
        </rect>
       </property>
       <property name="text">
-       <string>Hentai</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
+       <string>语  言:</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QComboBox" name="comboLanguage">
       <property name="geometry">
        <rect>
-        <x>320</x>
-        <y>20</y>
-        <width>75</width>
-        <height>23</height>
+        <x>100</x>
+        <y>30</y>
+        <width>171</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>70</y>
+        <width>71</width>
+        <height>21</height>
        </rect>
       </property>
       <property name="text">
-       <string>修改</string>
+       <string>服务器地址:</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_2">
+     <widget class="QLineEdit" name="txtUrl">
       <property name="geometry">
        <rect>
-        <x>500</x>
-        <y>20</y>
-        <width>75</width>
-        <height>23</height>
+        <x>100</x>
+        <y>70</y>
+        <width>361</width>
+        <height>21</height>
        </rect>
-      </property>
-      <property name="text">
-       <string>生成新密钥</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_3">
-      <property name="geometry">
-       <rect>
-        <x>500</x>
-        <y>50</y>
-        <width>75</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>导出...</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_4">
-      <property name="geometry">
-       <rect>
-        <x>500</x>
-        <y>80</y>
-        <width>75</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>导入...</string>
       </property>
      </widget>
     </widget>

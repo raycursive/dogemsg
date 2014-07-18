@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Project SYSTEM "Project-5.1.dtd">
+<!-- eric5 project file for project dogemsg -->
+<!-- Saved: 2014-07-18, 22:35:57 -->
+<!-- Copyright (C) 2014 TBU, contact@gamewiki.info -->
+<Project version="5.1">
+  <Language>en_US</Language>
+  <Hash>2c45b7ca2b77e5d47e1791f584a17f01a2f0450b</Hash>
+  <ProgLanguage mixed="0">Python3</ProgLanguage>
+  <ProjectType>Qt4</ProjectType>
+  <Description></Description>
+  <Version>0.1</Version>
+  <Author>TBU</Author>
+  <Email>contact@gamewiki.info</Email>
+  <Sources>
+    <Source>client.py</Source>
+    <Source>key.py</Source>
+    <Source>postrec.py</Source>
+    <Source>randomstr.py</Source>
+    <Source>__init__.py</Source>
+    <Source>Ui_dogemsg.py</Source>
+  </Sources>
+  <Forms>
+    <Form>dogemsg.ui</Form>
+  </Forms>
+  <Translations/>
+  <Resources/>
+  <Interfaces/>
+  <Others>
+    <Other>config.json</Other>
+  </Others>
+  <Vcs>
+    <VcsType>None</VcsType>
+  </Vcs>
+  <FiletypeAssociations>
+    <FiletypeAssociation pattern="*.idl" type="INTERFACES"/>
+    <FiletypeAssociation pattern="*.py" type="SOURCES"/>
+    <FiletypeAssociation pattern="*.py3" type="SOURCES"/>
+    <FiletypeAssociation pattern="*.pyw" type="SOURCES"/>
+    <FiletypeAssociation pattern="*.pyw3" type="SOURCES"/>
+    <FiletypeAssociation pattern="*.qm" type="TRANSLATIONS"/>
+    <FiletypeAssociation pattern="*.qrc" type="RESOURCES"/>
+    <FiletypeAssociation pattern="*.ts" type="TRANSLATIONS"/>
+    <FiletypeAssociation pattern="*.ui" type="SOURCES"/>
+    <FiletypeAssociation pattern="*.ui.h" type="FORMS"/>
+    <FiletypeAssociation pattern="config.json" type="OTHERS"/>
+    <FiletypeAssociation pattern="dogemsg.ui" type="FORMS"/>
+  </FiletypeAssociations>
+</Project>
