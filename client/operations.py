@@ -1,7 +1,7 @@
 import json
 import urllib.request
 import urllib.parse
-import parsemsg
+import parse
 from randomstr import *
 from key import *
 from binascii import hexlify, unhexlify
@@ -37,12 +37,15 @@ def receive(key, unread = 1):
             result.append(i)
         else:
             print("ERROR! Verify Failed!")
+    for i in result:
+        print(parse.parsemsg(i))
     return result
 
 
 
 def send(keyfrom, keyto, message):
     '''keyfrom : ECC keyto : hex address'''
+    message = parse.msgdumps(message)
     postdata = {'action': 'send',
                 'from': tohex(keyfrom.get_pubkey()),
                 'to': keyto,
@@ -50,7 +53,7 @@ def send(keyfrom, keyto, message):
                 'message': tohex(keyfrom.encrypt(message, unhexlify(keyto)))
                 }
     request = GetRequest(server, postdata)
-    print(request)
+    return request
 
 
 def delete(key):
@@ -63,7 +66,7 @@ def delete(key):
                 'message': msg
                 }
     request = GetRequest(server, postdata)
-    print(request)
+    return request
 
 
 def adduser(key, name='Anonymous', email=''):
@@ -78,7 +81,7 @@ def adduser(key, name='Anonymous', email=''):
                 'message': msg
                 }
     request = GetRequest(server, postdata)
-    print(request)
+    return request
 
 def modifyuser(key, name='Anonymous', email=' '):
     msg = random_str()
@@ -91,7 +94,7 @@ def modifyuser(key, name='Anonymous', email=' '):
                 'message':msg
                 }
     request = GetRequest(server, postdata)
-    print(request)
+    return request
 
 def queryuser(key):
     '''key: hex'''
@@ -99,4 +102,4 @@ def queryuser(key):
                 'key': key
                 }
     request = GetRequest(server, postdata)
-    print(request)
+    return request

@@ -1,9 +1,10 @@
 import json
 
-class contact:
-    def __init__ (self, key, name = "", alias = ""):
+class Contact:
+    def __init__ (self, key, name = "", alias = "", email = ""):
         self.name = name
         self.alias = alias
+        self.email = email
         self.key = key
 
     def __repr__(self):
@@ -11,6 +12,7 @@ class contact:
 
     def get_information(self):
         return {"name" : self.name,
-                  "alias" : self.alias,
-                  "key" : self.key
+                "alias" : self.alias,
+                "email" : self.email,
+                "key" : self.key
             }
