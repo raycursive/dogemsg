@@ -51,7 +51,7 @@ dogemsg
 
 本来想用RSA 但是因为publickey 太 <del>他 妈</del>长了 改用ECC
 
-python3的decode真他喵难用
+python3的decode真他喵难用啥
 
 找不到一个合适的php ecc库 QwQ
 
@@ -75,3 +75,21 @@ ok Server端基本撸完 下午完善client 然后开始GUI开发
 (之前若msg是中文的话会有bug, 果断encode, 解决问题)
 
 下午将函数封装, 并且初步完成一个命令行下的客户端.
+
+函数基本上弄的差不多了
+
+主要的函数都在`operators.py`里.
+
+添加了一个保存keypair的功能 添加的时候发现这个功能其实特别的自然, 其实是之前的设计问题吧.
+
+添加了一个Class:`Contact`, 用以存放联系人信息.
+
+接下来的主要任务: 
+
+1.先撸出一个本地的friendlist的存取和维护.
+2.完成一个对config的读取和维护.
+
+与此同时还实现了对message structure的完善, 接下来所有的信息发送都将完成的被纳入所定义的信息结构体系中.
+
+还需要实现的是将收回的信息按照相同联系人分配. 其实还是先撸完friendlist再说啦.
+
