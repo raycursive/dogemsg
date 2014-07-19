@@ -41,7 +41,7 @@ function receivemsg() {
 		exit(error('receive', mysql_error()));
 	while ($row = mysql_fetch_array($result)) {
 	    $msg = array("from" => $row["keyfrom"], "to" => $row["keyto"], "time" => $row["time"], "message" => $row["message"], "signature" => $row["signature"], "read" => $row["read"]);
-	    array_push($returndata, json_encode($msg));
+	    array_push($returndata, $msg);
 	}
 	$res = mysql_query("UPDATE `messages` SET `read` = TRUE WHERE `keyto` = '" . $_POST["key"] . "' AND `read` = FALSE ");
 	if (!$res)

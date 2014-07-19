@@ -5,7 +5,7 @@ import parse
 from randomstr import random_str
 from binascii import hexlify, unhexlify
 
-from key import *
+from keymanage import *
 
 server = "http://msg.raycursive.com/api.php"
 
@@ -31,7 +31,7 @@ def receive(key, unread = 1):
                 }
     request = GetRequest(server, postdata)
     result = []
-    for i in map(json.loads, json.loads(request)):
+    for i in json.loads(request):
         i['message'] = key.decrypt(unhexlify(i['message']))
         if ECC(pubkey = unhexlify(i['from'])).verify(unhexlify(i['signature']),i['message']):
             i['message'] = i['message'].decode()
@@ -54,7 +54,7 @@ def send(keyfrom, keyto, message):
                 'message': tohex(keyfrom.encrypt(message, unhexlify(keyto)))
                 }
     request = GetRequest(server, postdata)
-    return request
+    return json.loads(request)
 
 
 def delete(key):
@@ -67,7 +67,7 @@ def delete(key):
                 'message': msg
                 }
     request = GetRequest(server, postdata)
-    return request
+    return json.loads(request)
 
 
 def adduser(key, name='Anonymous', email=''):
@@ -82,7 +82,7 @@ def adduser(key, name='Anonymous', email=''):
                 'message': msg
                 }
     request = GetRequest(server, postdata)
-    return request
+    return json.loads(request)
 
 def modifyuser(key, name='Anonymous', email=' '):
     msg = random_str()
@@ -95,7 +95,7 @@ def modifyuser(key, name='Anonymous', email=' '):
                 'message':msg
                 }
     request = GetRequest(server, postdata)
-    return request
+    return json.loads(request)
 
 def queryuser(key):
     '''key: hex'''
@@ -103,4 +103,4 @@ def queryuser(key):
                 'key': key
                 }
     request = GetRequest(server, postdata)
-    return request
+    return json.loads(request)

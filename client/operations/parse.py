@@ -1,5 +1,6 @@
 import json
 from contact import Contact
+from operations import queryuser
 
 def msgdumps(string):
 	result = {"type" : "message",
