@@ -15,13 +15,13 @@ def msgloads(string):
 def parsemsg(req):
 	time = req['time']
 	message = msgloads(req['message'])
-	contact = getuserinfo(queryuser(req['from']))
-	keyfrom = contact.name
-	if contact.alias != "":
-		keyfrom += " (" + contact.alias + ")"
+	contact = getuserinfo(req['from'])
+	keyfrom = contact['name']
+	if 'alias' in contact:
+		keyfrom += " (" + contact['alias'] + ")"
 	return "====================================\n" + keyfrom + "\t" + time +"\n====================================\n\t" + message
 
 #load userinfo from local file(if possible)(still implementing)
-def getuserinfo(string):
-	result = json.loads(string)
-	return Contact(result["key"], name = result["name"], alias = "", email = result["email"])
+def getuserinfo(key):
+        data = queryuser(key)   #it shoule be replaced to the method of friendlist
+        return data

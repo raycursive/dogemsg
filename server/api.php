@@ -115,3 +115,16 @@ function queryuser(){
             $row = mysql_fetch_array($result);
             exit(json_encode(array("name" => $row["name"], "email" => $row["email"], "key" => $row["key"])));
 }
+
+function postfriendlist() {
+    if (authen($_POST["key"])) {
+        $res = mysql_query("UPDATE `users` SET `friendlist`='" . $_POST["email"] . "' WHERE `key`='" . $_POST["key"] . "'");
+        if (!$res)
+            exit(error("postfriendlist", mysql_error()));
+        else
+            exit(json_encode(array("Status" => "Success", "action" => "postfriendlist")));
+    } else {
+        exit(error("postfriendlist", "Verify Failed!"));
+    }
+}
+
