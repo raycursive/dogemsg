@@ -1,7 +1,10 @@
 from pyelliptic.ecc import ECC
 from binascii import hexlify, unhexlify
 import json
+import os
+import sys
 
+os.chdir(os.path.dirname(sys.argv[0])[:-11])
 
 def tohex(key):
     return hexlify(key).decode().upper()
