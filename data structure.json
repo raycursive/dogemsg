@@ -81,15 +81,39 @@ MSG Structure
 
 FRIEND LIST Structure
 
-[
-	{
+{
+	"key1" : {
 		"name" : "name",
 		"alias" : "alias",
-		"key" : "key"
+		"email" : "email"
+		},
+	"key2" : {
+		"name" : "name",
+		"alias" : "alias",
+		"email" : "email"
+		},
+}
+
+MESSAGE LOG Strcture
+
+[
+	{
+		"key" : "1",
+		"messages" : [
+			{
+				"time" : "time",
+				"message" : "message"
+			}
+		]
 	},
 	{
-		"name" : "name2",
-		"alias" : "alias2",
-		"key" : "key2"
+		"key" : "2",
+		"messages" : [
+			{
+				"time" : "time",
+				"message" : "message"
+			}
+		]
 	}
 ]
+
