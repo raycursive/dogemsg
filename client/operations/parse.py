@@ -1,6 +1,5 @@
 import json
-from contact import *
-from operations import *
+from contact import Contact
 
 def msgdumps(string):
 	result = {"type" : "message",

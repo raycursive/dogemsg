@@ -2,9 +2,10 @@ import json
 import urllib.request
 import urllib.parse
 import parse
-from randomstr import *
-from key import *
+from randomstr import random_str
 from binascii import hexlify, unhexlify
+
+from key import *
 
 server = "http://msg.raycursive.com/api.php"
 
