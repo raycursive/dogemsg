@@ -1,13 +1,12 @@
 import json
 import urllib.request
 import urllib.parse
-import parse
+from parse import parsemsg, msgdumps
 from randomstr import random_str
-from binascii import hexlify, unhexlify
-
-from keymanage import *
+from hexparse import tohex, unhex
 
 server = "http://msg.raycursive.com/api.php"
+
 
 def GetRequest(des, postdata):
     params = urllib.parse.urlencode(postdata).encode('utf-8')
@@ -21,37 +20,34 @@ def GetRequest(des, postdata):
     return urllib.request.urlopen(req).read().decode("UTF8")
 
 
-
-
-def receive(key, unread = 1):
+def receive(key, unread=1):
     '''key: ECC'''
     postdata = {'action': 'receive',
                 'key': tohex(key.get_pubkey()),
-                'unread' : unread
+                'unread': unread
                 }
     request = GetRequest(server, postdata)
     result = []
-    for i in json.loads(request):
-        i['message'] = key.decrypt(unhexlify(i['message']))
-        if ECC(pubkey = unhexlify(i['from'])).verify(unhexlify(i['signature']),i['message']):
+    for i in unhex(json.loads(request)):
+        i['message'] = key.decrypt(i['message'])
+        if ECC(pubkey=i['from']).verify(i['signature'], i['message']):
             i['message'] = i['message'].decode()
             result.append(i)
         else:
             print("ERROR! Verify Failed!")
     for i in result:
-        print(parse.parsemsg(i))
+        print(parsemsg(i))
     return result
-
 
 
 def send(keyfrom, keyto, message):
     '''keyfrom : ECC keyto : hex address'''
-    message = parse.msgdumps(message)
+    message = msgdumps(message)
     postdata = {'action': 'send',
                 'from': tohex(keyfrom.get_pubkey()),
                 'to': keyto,
                 'signature': tohex(keyfrom.sign(message)),
-                'message': tohex(keyfrom.encrypt(message, unhexlify(keyto)))
+                'message': tohex(keyfrom.encrypt(message, unhex(keyto)))
                 }
     request = GetRequest(server, postdata)
     return json.loads(request)
@@ -73,7 +69,7 @@ def delete(key):
 def adduser(key, name='Anonymous', email=''):
     ''' key : ECC '''
     msg = random_str()
-    sign = tohex(key.sign(msg))    
+    sign = tohex(key.sign(msg))
     postdata = {'action': 'adduser',
                 'key': tohex(key.get_pubkey()),
                 'name': name,
@@ -84,18 +80,20 @@ def adduser(key, name='Anonymous', email=''):
     request = GetRequest(server, postdata)
     return json.loads(request)
 
+
 def modifyuser(key, name='Anonymous', email=' '):
     msg = random_str()
     sign = tohex(key.sign(msg))
     postdata = {'action': 'modifyuser',
                 'key': tohex(key.get_pubkey()),
-                'name':name,
+                'name': name,
                 'email': email,
                 'signature': sign,
-                'message':msg
+                'message': msg
                 }
     request = GetRequest(server, postdata)
     return json.loads(request)
+
 
 def queryuser(key):
     '''key: hex'''
