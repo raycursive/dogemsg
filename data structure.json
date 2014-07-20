@@ -52,6 +52,13 @@ API Structure
 	"key" : "key"
 }
 
+{
+	"action" : "postfriendlist",
+	"key" : "publickey",
+	"signature" : "signature",
+	"message" : "encrypt(friendlist)"
+}
+
 
 
 MSG Structure
