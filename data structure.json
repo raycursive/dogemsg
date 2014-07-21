@@ -59,6 +59,10 @@ API Structure
 	"message" : "encrypt(friendlist)"
 }
 
+{
+	"action": "fetchfriendlist",
+	"key": "publickey"
+}
 
 
 MSG Structure

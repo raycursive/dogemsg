@@ -1,13 +1,10 @@
 from pyelliptic.ecc import ECC
-from binascii import hexlify, unhexlify
+from hexparse import unhex
 import json
 import os
 import sys
 
-os.chdir(os.path.dirname(sys.argv[0])[:-11])
-
-def tohex(key):
-    return hexlify(key).decode().upper()
+os.chdir(os.path.join(os.path.dirname(sys.argv[0]), os.pardir))
 
 
 def generate_keypair(filename='defalut'):
@@ -15,16 +12,15 @@ def generate_keypair(filename='defalut'):
 
 
 def load_ECC(filename='default'):
-    with open('keys/' + filename + '.key') as f:
+    with open('accounts/' + filename + '/key.dat') as f:
         keypair = json.loads(f.read())
-    return ECC(pubkey=unhexlify(keypair["public_key"]),
-               privkey=unhexlify(keypair["private_key"]))
+    return ECC(pubkey=unhex(keypair["public_key"]),
+               privkey=unhex(keypair["private_key"]))
 
 
 def save_keypair(key, filename):
     keypair = {'public_key': parsekey(key.get_pubkey()),
                'private_key': parsekey(key.get_privkey())
                }
-    with open('keys/' + filename + '.key', 'w') as f:
+    with open('accounts/' + filename + '/key.dat', 'w') as f:
         f.write(json.dumps(keypair))
-
