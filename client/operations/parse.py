@@ -18,11 +18,11 @@ def parsemsg(req):
     time = req['time']
     message = msgloads(req['message'])
     contact = getuserinfo(req['from'])
-    keyfrom = contact['name']
+    contact_name = contact['name']
     if 'alias' in contact:
-        keyfrom += " (" + contact['alias'] + ")"
+        contact_name += " (" + contact['alias'] + ")"
     return "====================================\n" +\
-        keyfrom + "\t" + time + \
+        contact_name + "\t" + time + \
         "\n====================================\n\t" +\
         message
 

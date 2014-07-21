@@ -8,6 +8,8 @@ if ($_POST["action"] == "delete") delmsgs();
 if ($_POST["action"] == "adduser") adduser();
 if ($_POST["action"] == "modifyuser") modifyuser();
 if ($_POST["action"] == "queryuser") queryuser();
+if ($_POST["action"] == "postfriendlist") postfriendlist();
+if ($_POST["action"] == "fetchfriendlist") fetchfriendlist();
 
 
 exit(json_encode(array("Status" => "Nothing")));
@@ -118,7 +120,7 @@ function queryuser(){
 
 function postfriendlist() {
     if (authen($_POST["key"])) {
-        $res = mysql_query("UPDATE `users` SET `friendlist`='" . $_POST["email"] . "' WHERE `key`='" . $_POST["key"] . "'");
+        $res = mysql_query("UPDATE `users` SET `friendlist`='" . $_POST["message"] . "' WHERE `key`='" . $_POST["key"] . "'");
         if (!$res)
             exit(error("postfriendlist", mysql_error()));
         else
@@ -128,3 +130,10 @@ function postfriendlist() {
     }
 }
 
+function fetchfriendlist() {
+    $res = mysql_query("SELECT * FROM `users` WHERE `key`='" . $_POST["key"] . "'");
+    if (!$res)
+        exit(error("fetchfriendlist", mysql_error()));
+    else
+        exit($res["friendlist"]);
+}
