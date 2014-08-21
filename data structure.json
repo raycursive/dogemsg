@@ -9,7 +9,7 @@ API Structure
 
 {
 	"action" : "send",
-	"message" : "sentmessage", 
+	"message" : "sentmessage",
 	"keyfrom" : "from",
 	"keyto" : "to",
 	"signature" : "sign(msg)"
@@ -107,24 +107,21 @@ FRIEND LIST Structure
 
 MESSAGE LOG Strcture
 
-[
-	{
-		"key" : "1",
-		"messages" : [
-			{
+{
+	"key1" : [
+				{
+					"time" : "time",
+					"message" : "message"
+				},{
+					"time" : "time",
+					"message" : "message"
+				}
+			],
+
+	"key2" : {
 				"time" : "time",
 				"message" : "message"
 			}
-		]
-	},
-	{
-		"key" : "2",
-		"messages" : [
-			{
-				"time" : "time",
-				"message" : "message"
-			}
-		]
-	}
-]
+}
+
 

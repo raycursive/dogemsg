@@ -1,5 +1,5 @@
 import json
-from operations import queryuser
+from friendlist import Friendlist
 
 
 def msgdumps(string):
@@ -17,7 +17,7 @@ def msgloads(string):
 def parsemsg(req):
     time = req['time']
     message = msgloads(req['message'])
-    contact = getuserinfo(req['from'])
+    contact = friendlist.getcontact(req['from'])
     contact_name = contact['name']
     if 'alias' in contact:
         contact_name += " (" + contact['alias'] + ")"
@@ -28,7 +28,7 @@ def parsemsg(req):
 
 # load userinfo from local file(if possible)(still implementing)
 
-
-def getuserinfo(key):
-    data = queryuser(key)  # it shoule be replaced to the method of friendlist
-    return data
+##
+##def getuserinfo(key):
+##    data = queryuser(key)  # it shoule be replaced to the method of friendlist
+##    return data

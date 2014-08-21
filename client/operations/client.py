@@ -1,12 +1,14 @@
-from binascii import unhexlify
-from pyelliptic.ecc import ECC
 from key import *
 from operations import *
+from friendlist import *
 
+os.chdir(os.path.join(os.path.dirname(sys.argv[0]), os.pardir))
 
 def load_settings():
-    '''load settings from config.json'''
-    pass
+    with open("config.json") as f:
+        settings = json.loads(f.read())
+    return settings
+
 
 
 class user(object):
@@ -14,16 +16,5 @@ class user(object):
     """docstring for user"""
 
     def __init__(self, account):
-        self.ecc, keypair = load_keypair(account)
-        self.pubkey = keypair['public_key']
-        self.privkey = keypair['private_key']
-        # add more
+        self.ecc = load_ecc(account)
 
-    def send_message(self, keyto, message):
-        encrypted_msg = self.ecc.encrypt(message, keyto)
-        signature = self.ecc.sign(message)
-        testsend(self.pubkey, keyto, signature, encrypted_msg)
-
-    def recieve_message(self, des, key):
-        signature = self.ecc.sign(key)
-        msg = testreceive(des, key, signature)

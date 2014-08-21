@@ -1,8 +1,8 @@
 import json
 import urllib.request
 import urllib.parse
+from pyelliptic.ecc import ECC
 from parse import parsemsg, msgdumps
-from friendlist import add_contact_to_friend_list,
 from randomstr import random_str
 from hexparse import tohex, unhex
 
@@ -36,8 +36,6 @@ def receive(key, unread=1):
             result.append(i)
         else:
             print("ERROR! Verify Failed!")
-    for i in result:
-        print(parsemsg(i))
     return result
 
 
@@ -105,11 +103,6 @@ def queryuser(key):
     return json.loads(request)
 
 
-def addfriend(friends_key, filename, alias=''):
-    friend = queryuser(friends_key)
-    add_contact_to_friend_list(friend, alias=alias, filename=filename)
-
-
 def postfriendlist(key, filename):
     '''filename is the user filename'''
     pubkey = key.get_pubkey()
@@ -129,4 +122,6 @@ def fetchfriendlist(key, filename):
     postdata = {'action': 'fetchfriendlist',
                 'key': tohex(pubkey)}
     request = GetRequest(server, postdata)
-    return json.loads(request)
+    return key.decrypt(json.loads(request))
+
+

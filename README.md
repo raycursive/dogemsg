@@ -22,7 +22,7 @@ dogemsg
 
 `dogemsg.ui`
 
-客户端UI设计(prototype) 
+客户端UI设计(prototype)
 
 
 仍需实现:
@@ -86,7 +86,7 @@ ok Server端基本撸完 下午完善client 然后开始GUI开发
 
 添加了一个Class:`Contact`, 用以存放联系人信息.
 
-接下来的主要任务: 
+接下来的主要任务:
 
 
 1.  先撸出一个本地的friendlist的存取和维护.
@@ -103,3 +103,15 @@ ok Server端基本撸完 下午完善client 然后开始GUI开发
 这个明天到网上找一个现成的就ok了...
 
 才不要重复造轮子!
+
+###2014/08/20
+
+Orz之前电脑坏了一直没干活 从今天开始至少每天完成一部分工作吧.
+
+之前好久没更新updatelog, 还是做了很多事情的.
+
+现在基本上实现好了friendlist和msglog
+
+接下来需要一个config, 并且全局的读入一个CONFIG class
+
+(由于功能比较密集 想了一下其实封装成一个Class也挺好, 试一试好了.)
