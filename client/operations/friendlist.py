@@ -1,7 +1,7 @@
 import json
 import os
 import sys
-
+from hexparse import tohex, unhex
 os.chdir(os.path.join(os.path.dirname(sys.argv[0]), os.pardir))
 
 class Friendlist():
@@ -11,7 +11,7 @@ class Friendlist():
             self.data = json.loads(f.read())
 
     def __repr__(self):
-        return str(self.data)
+        return json.dumps(self.data)
 
     def saveto(self, filename):
         with open('accounts/' + filename + '/friendlist.dat','w') as f:
@@ -39,6 +39,7 @@ class Friendlist():
         else:
             return {'name':key, 'alias':'', 'email':''}
 
+
 ##def load_friend_list(filename='default'):
 ##    with open('accounts/' + filename + '/friendlist.dat') as f:
 ##        friendlist = json.loads(f.read())
@@ -60,10 +61,21 @@ class Friendlist():
 ##                         'email': email,
 ##                         'alias': alias}
 ##    save_friend_list(friendlist)
-
-def addfriend(friends_key, friendlist, alias=''):
+def addfriend(friendlist, friends_key, alias=''):
     from operations import queryuser
     friendlist.addcontact(queryuser(friends_key),alias)
+
+def updatefriend(friendlist, friends_key):
+    from operations import queryuser
+    addfriend(friendlist, friends_key, friendlist.getcontact(friends_key)['alias'])
+
+def updatefromserver(friendlist):
+    from operations import fetchfriendlist
+    from keymanage import load_ECC
+    fetched = fetchfriendlist(load_ECC(friendlist.filename))
+    for key in fetched:
+        friendlist.data[key].update(fetched[key])
+
 
 
 

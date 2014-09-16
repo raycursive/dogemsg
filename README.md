@@ -115,3 +115,21 @@ Orz之前电脑坏了一直没干活 从今天开始至少每天完成一部分�
 接下来需要一个config, 并且全局的读入一个CONFIG class
 
 (由于功能比较密集 想了一下其实封装成一个Class也挺好, 试一试好了.)
+
+###2014/08/21
+
+*ATTENTION!*
+
+试图配置Mac下的开发环境.
+
+在安装`pyelliptic`的时候遇到问题..
+
+看起来是ctype什么的问题orz.
+
+试一试这个.
+
+`brew install openssl`
+
+`brew link openssl --force`
+
+Then everything will be ok~

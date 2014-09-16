@@ -29,13 +29,18 @@ class Msglog():
         messages = "".join((msg['time']+'\n'+msg['message']+'\n\n' for msg in logs))
         return header + messages
 
-    def addlog(self, key,time,message):
+    def addlog(self, key, time, message):
         if not key in self.data:
             self.data[key] = []
         self.data[key].append({'time' : time,
                                'message' : message})
 
 
+    def addlogfrommeta(self, array):
+        for dic in array:
+            self.addlog(dic['from'], dic['time'], dic['message'])
+
     def __repr__(self):
         return reduce(lambda a,b: a+b, (self.getlog(key) for key in self.data),"")
+
 

@@ -5,6 +5,10 @@ from pyelliptic.ecc import ECC
 from parse import parsemsg, msgdumps
 from randomstr import random_str
 from hexparse import tohex, unhex
+from friendlist import Friendlist
+#for test
+from keymanage import *
+from binascii import hexlify, unhexlify
 
 server = "http://msg.raycursive.com/api.php"
 
@@ -29,7 +33,7 @@ def receive(key, unread=1):
                 }
     request = GetRequest(server, postdata)
     result = []
-    for i in unhex(json.loads(request)):
+    for i in parsemsg(json.loads(request)):
         i['message'] = key.decrypt(i['message'])
         if ECC(pubkey=i['from']).verify(i['signature'], i['message']):
             i['message'] = i['message'].decode()
@@ -102,26 +106,25 @@ def queryuser(key):
     request = GetRequest(server, postdata)
     return json.loads(request)
 
-
-def postfriendlist(key, filename):
+def postfriendlist(key, friendlist):
     '''filename is the user filename'''
     pubkey = key.get_pubkey()
-    encry_friendlist = key.encrypt(
-        json.dumps(load_friend_list(filename)), pubkey)
+    encry_friendlist = tohex(key.encrypt(
+        str(friendlist), pubkey))
     postdata = {'action': 'postfriendlist',
                 'key': tohex(pubkey),
-                'signature': key.sign(encry_friendlist),
+                'signature': tohex(key.sign(encry_friendlist)),
                 'message': encry_friendlist}
     request = GetRequest(server, postdata)
     return json.loads(request)
 
 
-def fetchfriendlist(key, filename):
+def fetchfriendlist(key):
     '''return encrypted friendlist'''
     pubkey = key.get_pubkey()
     postdata = {'action': 'fetchfriendlist',
                 'key': tohex(pubkey)}
     request = GetRequest(server, postdata)
-    return key.decrypt(json.loads(request))
+    return json.loads(key.decrypt(unhex(json.loads(request)['friendlist'])).decode())
 
 

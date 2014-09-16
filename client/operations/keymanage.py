@@ -1,5 +1,5 @@
 from pyelliptic.ecc import ECC
-from hexparse import unhex
+from hexparse import unhex, tohex
 import json
 import os
 import sys
@@ -19,8 +19,16 @@ def load_ECC(filename='default'):
 
 
 def save_keypair(key, filename):
-    keypair = {'public_key': parsekey(key.get_pubkey()),
-               'private_key': parsekey(key.get_privkey())
+    keypair = {'public_key': tohex(key.get_pubkey()),
+               'private_key': tohex(key.get_privkey())
                }
+    if not os.path.exists('accounts/'+filename):
+        os.mkdir('accounts/'+filename)
     with open('accounts/' + filename + '/key.dat', 'w') as f:
         f.write(json.dumps(keypair))
+    with open('config.json') as g:
+        config = json.loads(g.read())
+        config['saved_path'].append(filename)
+    with open('config.json', 'w') as g:
+        g.write(json.dumps(config))
+    #need to reload settings

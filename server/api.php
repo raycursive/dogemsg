@@ -32,7 +32,7 @@ function sendmsg() {
 		exit(json_encode(array("Status" => "Success!", "action" => "send")));
 }
 
-//Query data from database. 
+//Query data from database.
 function receivemsg() {
 	$returndata = array();
 	if($_POST['unread'] == 1)
@@ -74,7 +74,7 @@ function authen($key) {
     } else {
     	$param = $key . " " . $_POST["signature"] . " " . $key;
     }
-    $res = shell_exec("python3 /home/wwwroot/dogemsg/verify.py " . $param);	
+    $res = shell_exec("python3 /home/wwwroot/dogemsg/verify.py " . $param);
     return strcmp($res, "True") == 0;
 }
 
@@ -135,5 +135,6 @@ function fetchfriendlist() {
     if (!$res)
         exit(error("fetchfriendlist", mysql_error()));
     else
-        exit($res["friendlist"]);
+        $row = mysql_fetch_array($res);
+        exit(json_encode(array("key" => $row["key"], "friendlist" => $row["friendlist"])));
 }
